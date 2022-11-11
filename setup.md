@@ -19,7 +19,7 @@ sudo usermod -aG sudo user
 ```
 ### stable diffusion webui dockerのインストールと起動
 ```
-git clone https://github.com/AbdBarho/stable-diffusion-webui-docker
+git clone https://github.com/ccfolia-corp/stable-diffusion-webui-docker
 #適宜docker-composeを変更してください
 cd stable-diffusion-webui-docker/
 docker compose --profile download up --build
