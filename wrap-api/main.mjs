@@ -29,7 +29,7 @@ app.get("/generate",async (req, res) => {
         return
     }
     const imageRes = await axios.get(`${SD_ENDPOINT}/file=${url}`, {responseType: 'arraybuffer'});
-    res.send(new Buffer.from(imageRes.data, 'binary').toString('base64'))
+    res.send(new Buffer.from(imageRes.data, 'binary'))
 })
 
 
