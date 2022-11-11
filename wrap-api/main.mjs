@@ -55,8 +55,8 @@ const reqBody = (data, width, height, step) => {
             0,
             0,
             false, 
-            width, // width
             height, // height
+            width, // width
             false,
             0.7,
             0,
