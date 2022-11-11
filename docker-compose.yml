@@ -2,7 +2,7 @@ version: '3.9'
 
 x-base_service: &base_service
     ports:
-      - "53564:7860"
+      - "127.0.0.1:53564:7860"
     volumes:
       - &v1 ./data:/data
       - &v2 ./output:/output
@@ -26,7 +26,7 @@ services:
   wrap-api:
     build: wrap-api/
     ports:
-      - "8888:3000"
+      - "127.0.0.1:8888:3000"
 
 
   auto: &automatic
