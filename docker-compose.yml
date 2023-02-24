@@ -6,6 +6,7 @@ x-base_service: &base_service
     volumes:
       - &v1 ./data:/data
       - &v2 ./output:/output
+    stop_signal: SIGINT
     deploy:
       resources:
         reservations:
@@ -34,31 +35,38 @@ services:
     <<: *base_service
     profiles: ["auto"]
     build: ./services/AUTOMATIC1111
-    image: sd-auto:14
+    image: sd-auto:47
     environment:
-      - CLI_ARGS=--allow-code --medvram --xformers
+      - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
 
   auto-cpu:
     <<: *automatic
     profiles: ["auto-cpu"]
     deploy: {}
     environment:
-      - CLI_ARGS=--no-half --precision full
+      - CLI_ARGS=--no-half --precision full --allow-code --enable-insecure-extension-access --api
 
-  hlky:
+  invoke:
     <<: *base_service
-    profiles: ["hlky"]
-    build: ./services/hlky/
-    image: sd-hlky:7
+    profiles: ["invoke"]
+    build: ./services/invoke/
+    image: sd-invoke:24
+    environment:
+      - PRELOAD=true
+      - CLI_ARGS=
+
+
+  sygil: &sygil
+    <<: *base_service
+    profiles: ["sygil"]
+    build: ./services/sygil/
+    image: sd-sygil:16
     environment:
       - CLI_ARGS=--optimized-turbo
       - USE_STREAMLIT=0
 
-  lstein:
-    <<: *base_service
-    profiles: ["lstein"]
-    build: ./services/lstein/
-    image: sd-lstein:5
+  sygil-sl:
+    <<: *sygil
+    profiles: ["sygil-sl"]
     environment:
-      - PRELOAD=true
-      - CLI_ARGS=--max_loaded_models=1
+      - USE_STREAMLIT=1
